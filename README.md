@@ -1,6 +1,6 @@
 ### Hello World 👋
 
-Android tech lead at Glovo, I’m currently working on unifying architecture between our apps, mobile devops and observability. I’m currently learning about Kotlin Multi-Platform. I am alawys looking to grow and share knowledge. Engineering excellence is a mindset.
+Staff Android engineer at @Hopper. I’m currently learning about Kotlin Multi-Platform. I am alawys looking to grow and share knowledge. Engineering excellence is a mindset.
 
 You can find me on:
 
