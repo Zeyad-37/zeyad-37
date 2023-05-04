@@ -1,6 +1,6 @@
 ### Hello World 👋
 
-Staff Android engineer at @Hopper. I’m currently learning about Kotlin Multi-Platform. I am alawys looking to grow and share knowledge. Engineering excellence is a mindset.
+Principal Android engineer at @Trainline. I’m currently learning about Kotlin Multi-Platform and AI. I am alawys looking to grow and share knowledge. Engineering excellence is a mindset.
 
 You can find me on:
 
