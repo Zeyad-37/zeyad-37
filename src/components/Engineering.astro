@@ -1,0 +1,200 @@
+---
+// Variant B: Engineering — mono details, grid, dark.
+import { person, links, work, services, process, testimonials, writing, about } from '../data/site';
+const q = (s: string) => `"${s}"`;
+---
+<div class="en">
+  <nav class="nav wrap">
+    <a href="#top" class="brand"><span class="dot"></span>{person.handle}</a>
+    <div class="links">
+      <a href="#work">/work</a><a href="#services">/services</a><a href="#writing">/writing</a><a href="#about">/about</a>
+      <a href="#contact" class="hi" data-cta="nav-contact">/contact</a>
+    </div>
+  </nav>
+
+  <header id="top" class="hero wrap rule">
+    <div class="hero-copy">
+      <p class="mono green">// staff · principal android engineer</p>
+      <h1>Android platforms that scale with the team behind them.</h1>
+      <p class="lede">{person.years}+ years modernizing large Android codebases and leading distributed teams at {person.companies.join(', ')}. Kotlin, KMP, architecture, and the people side of both.</p>
+      <div class="actions">
+        <a href={links.booking} class="btn" data-cta="hero-primary">Start a project</a>
+        <a href={links.cv} class="btn ghost" data-cta="hero-secondary">View CV</a>
+      </div>
+    </div>
+    <div class="code" aria-label="Profile as a Kotlin data class">
+      <div class="bar"><i></i><i></i><i></i><span>profile.kt</span></div>
+<pre><span class="k">data class</span> <span class="t">Engineer</span>(
+  <span class="p">name</span>      = <span class="s">{q(person.name)}</span>,
+  <span class="p">level</span>     = Level.<span class="p">STAFF_PRINCIPAL</span>,
+  <span class="p">years</span>     = <span class="p">{person.years}</span>,
+  <span class="p">base</span>      = <span class="s">{q(person.base)}</span>,
+  <span class="p">stack</span>     = listOf({person.stack.map((s, i) => <>{i > 0 && ', '}<span class="s">{q(s)}</span></>)}),
+  <span class="p">previously</span>= listOf({person.companies.map((s, i) => <>{i > 0 && ', '}<span class="s">{q(s)}</span></>)}),
+  <span class="p">available</span> = <span class="p">true</span>
+)</pre>
+    </div>
+  </header>
+
+  <section id="work" class="wrap section rule">
+    <div class="head"><h2>01 — selected work</h2><a href={links.github} class="mono green small">all →</a></div>
+    <div class="grid3">
+      {work.map((w) => (
+        <a class="card" href={w.href}>
+          <div class="ph">screenshot — {w.key}</div>
+          <div class="body">
+            <h3>{w.title}</h3>
+            <p>{w.summary}</p>
+            <div class="tags">{w.tags.map((t) => <span>{t}</span>)}</div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section id="services" class="wrap section rule">
+    <h2>02 — services &amp; pricing</h2>
+    <div class="svc-grid">
+      {services.map((s) => (
+        <div><h3>{s.title}</h3><p>{s.summary}</p><span class="mono green">{s.price}</span></div>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section rule two">
+    <div class="col">
+      <h2>03 — process</h2>
+      <div class="steps">
+        {process.map((p, i) => (
+          <div><span class="green">{String(i + 1).padStart(2, '0')}</span><span><b>{p.title.toLowerCase()}</b> — {p.summary}</span></div>
+        ))}
+      </div>
+    </div>
+    <div class="col">
+      <h2>04 — what colleagues say</h2>
+      {testimonials.map((t) => (
+        <blockquote><p>"{t.quote}"</p><cite>— {t.by}</cite></blockquote>
+      ))}
+    </div>
+  </section>
+
+  <section id="about" class="wrap section rule two">
+    <div class="col">
+      <h2>05 — about</h2>
+      <div class="ph photo">photo</div>
+      <p class="about">{about}</p>
+    </div>
+    <div class="col" id="writing">
+      <h2>06 — writing</h2>
+      <div class="posts">
+        {writing.map((w) => <a href={w.href}><span>{w.title}</span><span class="mono">{w.where.toLowerCase()}</span></a>)}
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="wrap section two">
+    <div class="col">
+      <h2 class="big">Got an Android platform problem?</h2>
+      <p class="mono muted">{person.email} · {person.base} ({person.timezone}) · replies within 48h</p>
+      <div class="social mono green"><a href={links.linkedin}>linkedin</a><a href={links.github}>github</a><a href={links.medium}>medium</a></div>
+    </div>
+    <form data-contact>
+      <input name="name" placeholder="name" aria-label="Name" required>
+      <input name="email" type="email" placeholder="email" aria-label="Email" required>
+      <textarea name="message" placeholder="describe the problem" aria-label="Message" rows="4" required></textarea>
+      <button class="btn" data-cta="form-submit">send →</button>
+    </form>
+  </footer>
+</div>
+
+<style>
+  .en { --bg:#0d1117; --panel:#161b22; --ink:#e6edf3; --body:#c9d1d9; --muted:#8b949e; --line:#21262d; --border:#30363d; --green:#3fb950; --mono:'IBM Plex Mono', monospace;
+        background:var(--bg); color:var(--ink); font-family:'IBM Plex Sans', sans-serif; min-height:100vh; }
+  :global(body) { margin:0; background:#0d1117; }
+  :global(*) { box-sizing:border-box; }
+  a { color:inherit; text-decoration:none; } a:hover { opacity:.75; }
+  .wrap { max-width:1100px; margin:0 auto; padding-left:48px; padding-right:48px; }
+  h1, h2, h3, p { margin:0; }
+  .mono { font-family:var(--mono); font-size:13px; }
+  .small { font-size:13px; }
+  .green { color:var(--green); }
+  .muted { color:var(--muted); }
+  .rule { border-bottom:1px solid var(--line); }
+  .ph { background:repeating-linear-gradient(135deg,#1c2129 0 10px,#21262d 10px 20px); display:flex; align-items:center; justify-content:center;
+        font-family:var(--mono); font-size:12px; color:var(--muted); height:200px; }
+  .btn { display:inline-block; background:var(--green); color:var(--bg); padding:14px 22px; font-size:14px; font-weight:600; border-radius:6px; border:0; font-family:inherit; cursor:pointer; }
+  .btn.ghost { background:transparent; color:var(--ink); border:1px solid var(--border); }
+
+  .nav { display:flex; justify-content:space-between; align-items:center; padding-top:20px; padding-bottom:20px; border-bottom:1px solid var(--line); font-family:var(--mono); font-size:13px; gap:16px; }
+  .brand { display:flex; gap:10px; align-items:center; }
+  .dot { width:8px; height:8px; background:var(--green); border-radius:50%; }
+  .links { display:flex; gap:28px; color:var(--muted); }
+  .links .hi { color:var(--ink); }
+
+  .hero { padding-top:88px; padding-bottom:64px; display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+  .hero-copy { display:flex; flex-direction:column; gap:24px; }
+  h1 { font-size:60px; font-weight:600; line-height:1.05; letter-spacing:-.03em; text-wrap:pretty; }
+  .lede { font-size:18px; line-height:1.55; color:var(--muted); max-width:520px; }
+  .actions { display:flex; gap:12px; flex-wrap:wrap; }
+  .code { background:var(--panel); border:1px solid var(--border); border-radius:8px; font-family:var(--mono); font-size:13px; line-height:1.7; overflow:hidden; align-self:start; }
+  .bar { display:flex; gap:6px; align-items:center; padding:12px 16px; border-bottom:1px solid var(--border); }
+  .bar i { width:10px; height:10px; border-radius:50%; background:var(--border); }
+  .bar span { margin-left:8px; color:var(--muted); }
+  pre { margin:0; padding:20px 24px; color:var(--body); font:inherit; overflow-x:auto; }
+  .k { color:#ff7b72; } .t { color:#d2a8ff; } .p { color:#79c0ff; } .s { color:#a5d6ff; }
+
+  .section { padding-top:72px; padding-bottom:72px; display:flex; flex-direction:column; gap:32px; }
+  h2 { font-size:14px; font-family:var(--mono); color:var(--muted); font-weight:400; }
+  .head { display:flex; justify-content:space-between; align-items:baseline; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .card { background:var(--panel); border:1px solid var(--border); border-radius:8px; overflow:hidden; display:flex; flex-direction:column; }
+  .card:hover { opacity:1; border-color:var(--muted); }
+  .card .body { padding:20px; display:flex; flex-direction:column; gap:10px; }
+  .card h3 { font-size:18px; font-weight:600; }
+  .card p { font-size:14px; line-height:1.5; color:var(--muted); }
+  .tags { display:flex; flex-wrap:wrap; gap:8px; font-family:var(--mono); font-size:11px; color:var(--muted); }
+  .tags span { border:1px solid var(--border); padding:2px 8px; border-radius:99px; }
+
+  .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .svc-grid > div { background:var(--bg); padding:28px; display:flex; flex-direction:column; gap:10px; }
+  .svc-grid h3 { font-size:17px; font-weight:600; }
+  .svc-grid p { font-size:14px; line-height:1.5; color:var(--muted); }
+
+  .section.two { display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+  .col { display:flex; flex-direction:column; gap:20px; }
+  .steps { display:flex; flex-direction:column; font-family:var(--mono); font-size:14px; line-height:1.7; color:var(--body); }
+  .steps > div { display:flex; gap:16px; padding:12px 0; border-top:1px solid var(--line); }
+  .steps > div:last-child { border-bottom:1px solid var(--line); }
+  .steps b { color:var(--ink); font-weight:500; }
+  blockquote { margin:0; background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:24px; display:flex; flex-direction:column; gap:12px; }
+  blockquote p { font-size:16px; line-height:1.55; }
+  cite { font-family:var(--mono); font-size:12px; color:var(--muted); font-style:normal; }
+  .photo { width:120px; height:120px; border-radius:8px; font-size:11px; }
+  .about { font-size:16px; line-height:1.6; color:var(--body); text-wrap:pretty; }
+  .posts { display:flex; flex-direction:column; }
+  .posts a { display:flex; justify-content:space-between; gap:16px; padding:14px 0; border-top:1px solid var(--line); font-size:15px; }
+  .posts a:last-child { border-bottom:1px solid var(--line); }
+  .posts .mono { font-size:12px; color:var(--muted); }
+
+  .big { font-family:'IBM Plex Sans', sans-serif; font-size:40px; font-weight:600; letter-spacing:-.02em; line-height:1.1; color:var(--ink); }
+  .social { display:flex; gap:16px; }
+  form { display:flex; flex-direction:column; gap:12px; }
+  input, textarea { padding:12px 14px; border:1px solid var(--border); border-radius:6px; background:var(--panel); color:var(--ink); font-family:var(--mono); font-size:13px; resize:none; }
+
+  @media (max-width: 900px) {
+    .wrap { padding-left:24px; padding-right:24px; }
+    .links a:not(.hi) { display:none; }
+    .hero, .section.two { grid-template-columns:1fr; }
+    .hero { padding-top:56px; padding-bottom:48px; gap:40px; }
+    h1 { font-size:42px; }
+    .section { padding-top:56px; padding-bottom:56px; }
+    .grid3, .svc-grid { grid-template-columns:1fr 1fr; }
+    .big { font-size:32px; }
+  }
+  @media (max-width: 600px) {
+    h1 { font-size:36px; }
+    .grid3, .svc-grid { grid-template-columns:1fr; }
+    pre { font-size:12px; padding:16px; }
+    .posts a { flex-direction:column; gap:4px; }
+  }
+</style>

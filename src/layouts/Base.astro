@@ -1,0 +1,59 @@
+---
+import { person } from '../data/site';
+import type { Variant } from '../data/site';
+
+interface Props {
+  variant: Variant;
+  fonts: string;
+  themeColor: string;
+}
+
+const { variant, fonts, themeColor } = Astro.props;
+const title = `${person.name} · ${person.title}`;
+const description = `${person.title} in ${person.base}. Android architecture, Kotlin Multiplatform migrations, audits and fractional technical leadership.`;
+const canonical = new URL('/', Astro.site).href;
+---
+<!doctype html>
+<html lang="en" data-variant={variant}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  <meta name="theme-color" content={themeColor}>
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={canonical}>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href={fonts}>
+  <!-- Plausible: every pageview and event carries the variant as a custom property. -->
+  <script defer data-domain="zeyadgasser.com" event-variant={variant} src="https://plausible.io/js/script.pageview-props.js"></script>
+  <script is:inline>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };</script>
+</head>
+<body>
+  <slot />
+  <script is:inline define:vars={{ variant, email: person.email }}>
+    // Conversion events for the A/B/C test. "CTA" is any call to action click,
+    // "Contact" is a submitted message (the primary metric).
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('[data-cta]');
+      if (el) window.plausible('CTA', { props: { variant, cta: el.dataset.cta } });
+    });
+    for (const form of document.querySelectorAll('form[data-contact]')) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        window.plausible('Contact', { props: { variant } });
+        // TODO(Zeyad): swap mailto for a form backend (Formspree, Cloudflare worker) if you want
+        // messages without the visitor's mail app. mailto under-counts real sends.
+        const subject = encodeURIComponent(`Hello from ${data.get('name') || 'your website'}`);
+        const body = encodeURIComponent(`${data.get('message') || ''}\n\n${data.get('name') || ''}\n${data.get('email') || ''}`);
+        window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      });
+    }
+  </script>
+</body>
+</html>

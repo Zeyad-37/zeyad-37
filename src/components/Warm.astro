@@ -1,0 +1,190 @@
+---
+// Variant C: Warm minimal — soft neutrals, personal, approachable.
+import { person, links, work, services, process, testimonials, writing, about } from '../data/site';
+const firstName = person.name.split(' ')[0];
+---
+<div class="wm">
+  <nav class="nav wrap">
+    <a href="#top" class="brand"><span class="mark">{person.initials}</span>{person.name}</a>
+    <div class="links">
+      <a href="#work">Work</a><a href="#services">Services</a><a href="#writing">Writing</a><a href="#about">About</a>
+      <a href="#contact" class="pill" data-cta="nav-contact">Say hello</a>
+    </div>
+  </nav>
+
+  <header id="top" class="hero wrap">
+    <div class="ph portrait">portrait</div>
+    <div class="hero-copy">
+      <h1>Hi, I'm {firstName}. I help teams build better Android apps — and become better teams while doing it.</h1>
+      <p class="lede">{person.title} with {person.years}+ years at {person.companies.join(', ').replace(/, ([^,]*)$/, ' and $1')}. Based in {person.base}, working with teams everywhere.</p>
+      <div class="actions">
+        <a href={links.booking} class="btn" data-cta="hero-primary">Book a free call</a>
+        <a href="#work" class="btn line" data-cta="hero-secondary">See my work</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="work" class="wrap section">
+    <div class="head"><h2>Things I've worked on</h2><a href={links.github} class="accent small">Everything →</a></div>
+    <div class="grid3">
+      {work.map((w) => (
+        <a class="card" href={w.href}>
+          <div class="ph">app screens — {w.key}</div>
+          <h3>{w.title}</h3>
+          <p>{w.summary}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section id="services" class="dark">
+      <div class="head end"><h2>How I can help</h2><p>From a short audit to a fractional lead role. Every engagement starts with a free call.</p></div>
+      <div class="grid3">
+        {services.map((s) => (
+          <div class="svc"><h3>{s.title}</h3><p>{s.summary}</p><span>{s.price}</span></div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <section class="wrap section">
+    <h2>How we'll work together</h2>
+    <div class="steps">
+      {process.map((p, i) => (
+        <div><span class="num">{i + 1}</span><h3>{p.title}</h3><p>{p.summary}</p></div>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section quotes">
+    {testimonials.map((t) => (
+      <blockquote><p>"{t.quote}"</p><cite>{t.by}</cite></blockquote>
+    ))}
+  </section>
+
+  <section class="wrap section two">
+    <div id="about" class="col">
+      <h2>A bit about me</h2>
+      <p class="about">{about}</p>
+      <a href={links.cv} class="accent small">Full story →</a>
+    </div>
+    <div id="writing" class="col">
+      <h2>Recent writing</h2>
+      <div class="posts">
+        {writing.map((w) => <a href={w.href}><span>{w.title}</span><span class="muted">{w.where}</span></a>)}
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap last">
+    <footer id="contact" class="contact">
+      <div class="col">
+        <h2 class="big">Let's build something good together.</h2>
+        <p class="muted-body">{person.email} · {person.base} · I reply within two days</p>
+        <div class="social accent"><a href={links.linkedin}>LinkedIn</a><a href={links.github}>GitHub</a><a href={links.medium}>Medium</a></div>
+      </div>
+      <form data-contact>
+        <input name="name" placeholder="Your name" aria-label="Name" required>
+        <input name="email" type="email" placeholder="Email" aria-label="Email" required>
+        <textarea name="message" placeholder="Tell me about your team" aria-label="Message" rows="4" required></textarea>
+        <button class="btn" data-cta="form-submit">Send</button>
+      </form>
+    </footer>
+  </div>
+</div>
+
+<style>
+  .wm { --bg:#fbf8f3; --card:#f2ece3; --ink:#2a2622; --body:#5c544b; --muted:#8a7f72; --line:#e6ddd0; --accent:#c8643f;
+        background:var(--bg); color:var(--ink); font-family:'DM Sans', sans-serif; min-height:100vh; }
+  :global(body) { margin:0; background:#fbf8f3; }
+  :global(*) { box-sizing:border-box; }
+  a { color:inherit; text-decoration:none; } a:hover { opacity:.75; }
+  .wrap { max-width:1100px; margin:0 auto; padding-left:64px; padding-right:64px; }
+  h1, h2, h3, p { margin:0; }
+  h2 { font-size:34px; font-weight:600; letter-spacing:-.02em; }
+  .accent { color:var(--accent); font-weight:600; }
+  .small { font-size:14px; }
+  .muted { color:var(--muted); }
+  .ph { background:repeating-linear-gradient(135deg,#e6dbcb 0 10px,#ece3d6 10px 20px); display:flex; align-items:center; justify-content:center;
+        font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted); height:180px; border-radius:12px; }
+  .btn { display:inline-block; background:var(--accent); color:var(--bg); padding:15px 26px; border-radius:99px; font-size:15px; font-weight:600; border:0; font-family:inherit; cursor:pointer; }
+  .btn.line { background:transparent; color:var(--ink); border:1px solid #d8cfc2; padding:15px 22px; }
+
+  .nav { display:flex; justify-content:space-between; align-items:center; padding-top:24px; padding-bottom:24px; gap:16px; }
+  .brand { display:flex; align-items:center; gap:12px; font-weight:600; font-size:16px; white-space:nowrap; }
+  .mark { width:36px; height:36px; border-radius:50%; background:var(--accent); color:var(--bg); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; }
+  .links { display:flex; gap:8px; font-size:14px; font-weight:500; }
+  .links a { padding:8px 14px; border-radius:99px; }
+  .links .pill { background:var(--ink); color:var(--bg); padding:8px 18px; }
+
+  .hero { padding-top:72px; padding-bottom:80px; display:grid; grid-template-columns:220px 1fr; gap:56px; align-items:center; }
+  .portrait { width:220px; height:220px; border-radius:50%; }
+  .hero-copy { display:flex; flex-direction:column; gap:24px; }
+  h1 { font-size:58px; font-weight:600; line-height:1.08; letter-spacing:-.025em; text-wrap:pretty; }
+  .lede { font-size:19px; line-height:1.55; color:var(--body); max-width:640px; }
+  .actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+
+  .section { padding-bottom:80px; display:flex; flex-direction:column; gap:28px; }
+  .head { display:flex; justify-content:space-between; align-items:baseline; gap:32px; }
+  .head.end { align-items:flex-end; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .card { background:var(--card); border-radius:20px; padding:24px; display:flex; flex-direction:column; gap:16px; }
+  .card h3 { font-size:20px; font-weight:600; }
+  .card p { font-size:15px; line-height:1.5; color:var(--body); }
+
+  .dark { margin-bottom:80px; padding:56px; background:var(--ink); color:var(--bg); border-radius:28px; display:flex; flex-direction:column; gap:36px; }
+  .dark .head p { font-size:15px; color:#bfb5a8; max-width:380px; }
+  .svc { background:#3a3430; border-radius:16px; padding:24px; display:flex; flex-direction:column; gap:8px; }
+  .svc h3 { font-size:17px; font-weight:600; }
+  .svc p { font-size:14px; line-height:1.5; color:#bfb5a8; }
+  .svc span { font-size:13px; color:#e8a483; font-weight:600; }
+
+  .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  .steps > div { display:flex; flex-direction:column; gap:12px; }
+  .num { width:40px; height:40px; border-radius:50%; background:var(--card); display:flex; align-items:center; justify-content:center; font-weight:600; font-size:14px; }
+  .steps h3 { font-size:18px; font-weight:600; }
+  .steps p { font-size:15px; line-height:1.5; color:var(--body); }
+
+  .quotes { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  blockquote { margin:0; background:var(--card); border-radius:20px; padding:32px; display:flex; flex-direction:column; gap:16px; }
+  blockquote p { font-size:19px; line-height:1.5; text-wrap:pretty; }
+  cite { font-size:14px; color:var(--muted); font-style:normal; }
+
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:56px; }
+  .col { display:flex; flex-direction:column; gap:20px; align-items:flex-start; }
+  .about { font-size:17px; line-height:1.6; color:var(--body); text-wrap:pretty; }
+  .posts { display:flex; flex-direction:column; gap:12px; align-self:stretch; }
+  .posts a { display:flex; justify-content:space-between; gap:16px; padding:16px 20px; border-radius:14px; border:1px solid var(--line); font-size:15px; font-weight:500; }
+
+  .last { padding-bottom:64px; }
+  .contact { padding:56px; background:var(--card); border-radius:28px; display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+  .big { font-size:40px; letter-spacing:-.025em; line-height:1.1; }
+  .muted-body { font-size:15px; color:var(--body); }
+  .social { display:flex; gap:16px; font-size:14px; }
+  form { display:flex; flex-direction:column; gap:12px; }
+  input, textarea { padding:14px 18px; border:1px solid #d8cfc2; border-radius:12px; background:var(--bg); font:inherit; font-size:15px; color:inherit; resize:none; }
+
+  @media (max-width: 900px) {
+    .wrap { padding-left:24px; padding-right:24px; }
+    .links a:not(.pill) { display:none; }
+    .hero { grid-template-columns:1fr; padding-top:40px; padding-bottom:56px; gap:32px; }
+    .portrait { width:140px; height:140px; }
+    h1 { font-size:40px; }
+    h2 { font-size:28px; }
+    .section { padding-bottom:56px; }
+    .grid3 { grid-template-columns:1fr 1fr; }
+    .steps { grid-template-columns:1fr 1fr; }
+    .quotes, .two, .contact { grid-template-columns:1fr; }
+    .head { flex-direction:column; align-items:flex-start; gap:12px; }
+    .head.end { align-items:flex-start; }
+    .dark { padding:32px 24px; margin-bottom:56px; }
+    .contact { padding:32px 24px; gap:32px; }
+    .big { font-size:32px; }
+  }
+  @media (max-width: 600px) {
+    h1 { font-size:34px; }
+    .grid3, .steps { grid-template-columns:1fr; }
+    .posts a { flex-direction:column; gap:4px; }
+  }
+</style>

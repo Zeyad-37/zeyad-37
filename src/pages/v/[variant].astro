@@ -1,0 +1,14 @@
+---
+// /v/editorial/, /v/engineering/, /v/warm/: the pages the split middleware
+// serves at "/". Reachable directly for QA; public/_headers keeps them out of
+// search, and the middleware strips that header when serving them at "/".
+import VariantPage from '../../components/VariantPage.astro';
+import { variants } from '../../data/site';
+import type { Variant } from '../../data/site';
+
+export function getStaticPaths() {
+  return variants.map((variant) => ({ params: { variant } }));
+}
+const variant = Astro.params.variant as Variant;
+---
+<VariantPage variant={variant} />
