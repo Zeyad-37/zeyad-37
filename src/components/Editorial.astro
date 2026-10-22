@@ -1,0 +1,216 @@
+---
+// Variant A: Editorial — serif, generous whitespace, light.
+import { person, links, work, services, process, testimonials, writing, about } from '../data/site';
+const [lead, ...rest] = work;
+---
+<div class="ed">
+  <nav class="nav wrap">
+    <a href="#top" class="brand">{person.name}</a>
+    <div class="links">
+      <a href="#work">Work</a><a href="#services">Services</a><a href="#writing">Writing</a><a href="#about">About</a>
+      <a href="#contact" class="underline" data-cta="nav-contact">Contact</a>
+    </div>
+  </nav>
+
+  <header id="top" class="hero wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">{person.title} · {person.base}</p>
+      <h1>I help engineering teams ship Android apps they're <em>proud</em> of.</h1>
+      <p class="lede">{person.years}+ years leading distributed teams at {person.companies.join(', ').replace(/, ([^,]*)$/, ' and $1')}, modernizing architecture, growing engineers, and turning legacy codebases into platforms.</p>
+      <div class="actions">
+        <a href={links.booking} class="btn" data-cta="hero-primary">Work with me</a>
+        <a href="#work" class="text-link" data-cta="hero-secondary">See selected work</a>
+      </div>
+    </div>
+    <div class="ph portrait">portrait photo</div>
+  </header>
+
+  <div class="proof"><div class="wrap">
+    {person.companies.map((c) => <span>{c}</span>)}<span>Kotlin Multiplatform</span><span>Medium contributor</span>
+  </div></div>
+
+  <section id="work" class="wrap section">
+    <div class="head"><h2>Selected work</h2><a href={links.github} class="text-link small">All projects</a></div>
+    <div class="work">
+      <article class="lead">
+        <div class="ph tall">project image — {lead.title}</div>
+        <div class="row"><h3>{lead.title}</h3>{lead.role && <span class="meta">{lead.role}</span>}</div>
+        <p>{lead.summary}</p>
+      </article>
+      {rest.map((w) => (
+        <article>
+          <div class="ph">project image — {w.title}</div>
+          <h3 class="sm">{w.title}</h3>
+          <p>{w.summary}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section id="services" class="dark">
+    <div class="wrap services">
+      <div class="intro">
+        <h2>Services</h2>
+        <p>Engagements from a two-week audit to an embedded fractional lead. Fixed-scope quotes after a discovery call.</p>
+        <a href={links.booking} class="btn outline" data-cta="services-book">Book a discovery call</a>
+      </div>
+      <div class="list">
+        {services.map((s) => (
+          <div class="svc"><h3>{s.title}</h3><p>{s.summary}</p><span>{s.price}</span></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="wrap section two">
+    <div class="about">
+      <h2>About</h2>
+      <p>{about}</p>
+      <a href={links.cv} class="text-link small">Full bio &amp; CV</a>
+    </div>
+    <div class="quotes">
+      {testimonials.map((t) => (
+        <blockquote><p>"{t.quote}"</p><cite>{t.by}</cite></blockquote>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap section flush">
+    <h2>How I work</h2>
+    <div class="steps">
+      {process.map((p, i) => (
+        <div><span class="meta">{String(i + 1).padStart(2, '0')}</span><h3>{p.title}</h3><p>{p.summary}</p></div>
+      ))}
+    </div>
+  </section>
+
+  <section id="writing" class="wrap section flush">
+    <div class="head"><h2>Writing</h2><a href={links.medium} class="text-link small">Medium</a></div>
+    <div class="posts">
+      {writing.map((w) => <a href={w.href}><span>{w.title}</span><span class="meta">{w.where}</span></a>)}
+    </div>
+  </section>
+
+  <footer id="contact" class="contact">
+    <div class="wrap two">
+      <div class="cta">
+        <h2>Let's talk about your Android platform.</h2>
+        <p>{person.email} · {person.base}, {person.timezone}</p>
+        <div class="social"><a href={links.linkedin}>LinkedIn</a><a href={links.github}>GitHub</a><a href={links.medium}>Medium</a></div>
+      </div>
+      <form data-contact>
+        <input name="name" placeholder="Name" aria-label="Name" required>
+        <input name="email" type="email" placeholder="Email" aria-label="Email" required>
+        <textarea name="message" placeholder="What are you working on?" aria-label="Message" rows="4" required></textarea>
+        <button class="btn" data-cta="form-submit">Send message</button>
+      </form>
+    </div>
+  </footer>
+</div>
+
+<style>
+  .ed { --bg:#f7f4ee; --ink:#1b1a17; --body:#3f3c35; --muted:#6b665b; --line:#d9d4c8; --serif:'Instrument Serif', serif;
+        background:var(--bg); color:var(--ink); font-family:Manrope, sans-serif; min-height:100vh; }
+  :global(body) { margin:0; background:#f7f4ee; }
+  :global(*) { box-sizing:border-box; }
+  a { color:inherit; text-decoration:none; } a:hover { opacity:.7; }
+  .wrap { max-width:1100px; margin:0 auto; padding-left:56px; padding-right:56px; }
+  h1, h2, h3 { margin:0; font-weight:400; }
+  h2 { font-family:var(--serif); font-size:44px; line-height:1.1; }
+  p { margin:0; }
+  .meta { font-size:13px; color:var(--muted); }
+  .ph { background:repeating-linear-gradient(135deg,#e6e1d5 0 10px,#ece8de 10px 20px); display:flex; align-items:center; justify-content:center;
+        font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted); height:260px; text-align:center; padding:8px; }
+  .ph.tall { height:380px; }
+  .text-link { font-size:15px; font-weight:600; border-bottom:1px solid var(--ink); padding-bottom:2px; }
+  .text-link.small { font-size:14px; }
+  .btn { display:inline-block; background:var(--ink); color:var(--bg); padding:16px 28px; font-size:15px; font-weight:600; border:0; font-family:inherit; cursor:pointer; }
+  .btn.outline { background:transparent; color:var(--bg); border:1px solid var(--bg); padding:14px 24px; font-size:14px; align-self:flex-start; }
+
+  .nav { display:flex; justify-content:space-between; align-items:center; padding-top:28px; padding-bottom:28px; border-bottom:1px solid var(--line); gap:16px; }
+  .brand { font-family:var(--serif); font-size:24px; white-space:nowrap; }
+  .links { display:flex; gap:32px; font-size:14px; font-weight:500; }
+  .underline { border-bottom:1px solid var(--ink); }
+
+  .hero { padding-top:96px; padding-bottom:72px; display:grid; grid-template-columns:1fr 340px; gap:64px; align-items:end; }
+  .hero-copy { display:flex; flex-direction:column; gap:28px; }
+  .eyebrow { font-size:14px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+  h1 { font-family:var(--serif); font-size:76px; line-height:1.02; letter-spacing:-.01em; text-wrap:pretty; }
+  .lede { font-size:19px; line-height:1.55; max-width:620px; color:var(--body); text-wrap:pretty; }
+  .actions { display:flex; gap:24px; align-items:center; flex-wrap:wrap; }
+  .portrait { height:420px; }
+
+  .proof { border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .proof .wrap { display:flex; flex-wrap:wrap; gap:16px 48px; padding-top:24px; padding-bottom:24px; font-size:14px; color:var(--muted); font-weight:500; }
+
+  .section { padding-top:80px; padding-bottom:80px; display:flex; flex-direction:column; gap:40px; }
+  .section.flush { padding-top:0; gap:32px; }
+  .head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; }
+  .work { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+  .work article { display:flex; flex-direction:column; gap:16px; }
+  .work .lead { grid-column:1 / -1; }
+  .work .row { display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; }
+  .work h3 { font-family:var(--serif); font-size:30px; }
+  .work h3.sm { font-size:26px; }
+  .work p { font-size:16px; line-height:1.55; color:var(--body); max-width:640px; }
+
+  .dark { background:var(--ink); color:var(--bg); }
+  .services { padding-top:80px; padding-bottom:80px; display:grid; grid-template-columns:320px 1fr; gap:64px; }
+  .intro { display:flex; flex-direction:column; gap:20px; }
+  .intro p { font-size:16px; line-height:1.55; color:#b9b3a5; }
+  .list { display:grid; grid-template-columns:1fr 1fr; gap:0 40px; }
+  .svc { padding:24px 0; border-top:1px solid #3d3a33; display:flex; flex-direction:column; gap:8px; }
+  .svc:nth-last-child(-n+2) { border-bottom:1px solid #3d3a33; }
+  .svc h3 { font-size:18px; font-weight:600; }
+  .svc p { font-size:14px; line-height:1.5; color:#b9b3a5; }
+  .svc span { font-size:13px; color:#a39d90; }
+
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:64px; }
+  .about { display:flex; flex-direction:column; gap:24px; align-items:flex-start; }
+  .about p { font-size:17px; line-height:1.6; color:var(--body); text-wrap:pretty; }
+  .quotes { display:flex; flex-direction:column; gap:32px; }
+  blockquote { margin:0; display:flex; flex-direction:column; gap:12px; padding-left:24px; border-left:1px solid var(--ink); }
+  blockquote p { font-family:var(--serif); font-size:24px; line-height:1.35; font-style:italic; }
+  cite { font-size:13px; color:var(--muted); font-style:normal; }
+
+  .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:32px; }
+  .steps > div { display:flex; flex-direction:column; gap:10px; border-top:1px solid var(--ink); padding-top:16px; }
+  .steps h3 { font-size:18px; font-weight:600; }
+  .steps p { font-size:14px; line-height:1.5; color:var(--body); }
+
+  .posts { display:flex; flex-direction:column; }
+  .posts a { display:flex; justify-content:space-between; gap:16px; padding:20px 0; border-top:1px solid var(--line); font-size:18px; }
+  .posts a:last-child { border-bottom:1px solid var(--line); }
+
+  .contact { border-top:1px solid var(--line); }
+  .contact .two { padding-top:80px; padding-bottom:80px; }
+  .cta { display:flex; flex-direction:column; gap:16px; }
+  .cta h2 { font-size:56px; line-height:1.05; }
+  .cta p { font-size:16px; color:var(--body); }
+  .social { display:flex; gap:20px; font-size:14px; font-weight:600; }
+  form { display:flex; flex-direction:column; gap:14px; }
+  input, textarea { padding:14px 16px; border:1px solid #c8c2b4; background:transparent; font:inherit; font-size:15px; color:inherit; resize:none; border-radius:0; }
+
+  @media (max-width: 900px) {
+    .wrap { padding-left:24px; padding-right:24px; }
+    .links a:not(.underline) { display:none; }
+    .hero { grid-template-columns:1fr; padding-top:56px; padding-bottom:48px; gap:40px; }
+    .portrait { height:280px; max-width:340px; }
+    h1 { font-size:48px; }
+    h2 { font-size:36px; }
+    .section { padding-top:56px; padding-bottom:56px; }
+    .work, .two, .services, .list { grid-template-columns:1fr; }
+    .services { gap:32px; padding-top:56px; padding-bottom:56px; }
+    .svc:nth-last-child(2) { border-bottom:0; }
+    .ph.tall { height:240px; }
+    .ph { height:200px; }
+    .steps { grid-template-columns:1fr 1fr; }
+    .cta h2 { font-size:40px; }
+    .contact .two { padding-top:56px; padding-bottom:56px; gap:40px; }
+  }
+  @media (max-width: 520px) {
+    h1 { font-size:40px; }
+    .steps { grid-template-columns:1fr; }
+    .posts a { flex-direction:column; gap:4px; font-size:17px; }
+  }
+</style>

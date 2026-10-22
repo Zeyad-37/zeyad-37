@@ -1,0 +1,6 @@
+---
+// Fallback for "/" when the split middleware isn't running (local dev, or a host
+// without Cloudflare Pages Functions). Editorial is the control variant.
+import VariantPage from '../components/VariantPage.astro';
+---
+<VariantPage variant="editorial" />
